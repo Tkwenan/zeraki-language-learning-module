@@ -1,3 +1,4 @@
+/*
 package com.example.languagelearningmodule.security;
 
 import com.example.languagelearningmodule.User.UserRepository;
@@ -27,6 +28,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     public CustomUserDetailsService() {
             super();
+    }
+
+    public CustomUserDetailsService( UserRepository userRepository){
+        this.userRepository = userRepository;
+
     }
 
     @Override
@@ -72,4 +78,4 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
 
 }
-
+*/

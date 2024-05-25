@@ -96,10 +96,10 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
                 completeExercise
         );
 
-            createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
-            createRoleIfNotFound("ROLE_USER", userPrivileges);
+            createRoleIfNotFound("ADMIN", adminPrivileges);
+            createRoleIfNotFound("USER", userPrivileges);
 
-            Role adminRole = roleRepository.findRoleByName("ROLE_ADMIN");
+            Role adminRole = roleRepository.findRoleByName("ADMIN");
             User user = new User();
             user.setFirstName("Test");
             user.setLastName("Test");

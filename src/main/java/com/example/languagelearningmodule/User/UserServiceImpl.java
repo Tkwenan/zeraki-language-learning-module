@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserByEmail(final String email) {
+    public Optional<User> findUserByEmail(final String email) {
         return userRepository.findByEmail(email);
     }
 
@@ -85,6 +85,6 @@ public class UserServiceImpl implements UserService {
     }
 
     private boolean emailExists(final String email) {
-        return userRepository.findByEmail(email) != null;
+        return userRepository.findByEmail(email).isPresent();
     }
 }

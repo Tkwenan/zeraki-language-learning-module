@@ -18,6 +18,9 @@ public class JwtService {
     @Value("${spring.application.secret-key}")
     private String SECRET_KEY ;
 
+    @Value("${security.jwt.expiration-time}")
+    private long jwtExpiration;
+
     public String extractUsername(String jwtToken) {
         try {
                 return extractClaim(jwtToken, Claims::getSubject);
@@ -84,6 +87,10 @@ public class JwtService {
         //extracting expiration date
         private Date extractExpiration(String token) {
             return extractClaim(token, Claims::getExpiration);
+        }
+
+        public long getExpirationTime() {
+            return jwtExpiration;
         }
 }
 
