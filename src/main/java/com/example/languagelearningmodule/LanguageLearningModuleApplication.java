@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan
-@EntityScan(basePackages = "com.example.languagelearningmodule")
+@EntityScan(basePackages = ("com.example.languagelearningmodule"))
 public class LanguageLearningModuleApplication {
 
 	public static void main(String[] args) {
