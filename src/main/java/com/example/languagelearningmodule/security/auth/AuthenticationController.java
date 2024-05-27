@@ -42,17 +42,23 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest authenticationRequest) {
+        //check if user exists in user repository
         if (!userRepository.existsByEmail(authenticationRequest.getUserEmail())) {
             throw new NoResourceFoundException("Invalid Authentication Credentials");
-        } else {
+        }
+
             Optional<User> possibleUser = userRepository.findByEmail(authenticationRequest.getUserEmail());
             User user = possibleUser.get();
 
             if (!passwordEncoder.matches(authenticationRequest.getUserPassword(), user.getPassword())) {
                 throw new NoResourceFoundException("Invalid Authentication Credentials");
             }
-            return ResponseEntity.ok(authenticationService.authenticate(authenticationRequest));
-        }
-    }
 
+            String jwtToken = jwtService.generateToken(user);
+
+            AuthenticationResponse authResponse = authenticationService.authenticate(authenticationRequest);
+            authResponse.setToken(jwtToken);
+            authResponse.setExpiresIn(jwtService.getExpirationTime());
+            return ResponseEntity.ok(authResponse);
+    }
 }

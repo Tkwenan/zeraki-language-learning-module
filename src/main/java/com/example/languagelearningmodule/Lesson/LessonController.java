@@ -36,7 +36,7 @@ public class LessonController {
         return new ResponseEntity<LessonDTO>(lessonResponse, HttpStatus.CREATED);
     }
 
-    @GetMapping("/display-lessons/{id}")
+    @GetMapping("/view-lesson-details/{id}")
     public ResponseEntity<LessonDTO> displayLessonDetails(@PathVariable(name = "id") Long id) {
         Lesson lesson = lessonService.getLessonById(id);
 
@@ -67,7 +67,7 @@ public class LessonController {
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/display-lessons")
+    @GetMapping("/view-lessons")
     public List<LessonDTO> displayLessons(@RequestParam(defaultValue = "0") int page,
                                       @RequestParam(defaultValue = "25") int size) throws Exception {
         Pageable pageable = PageRequest.of(page, size);

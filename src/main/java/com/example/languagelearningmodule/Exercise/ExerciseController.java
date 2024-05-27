@@ -42,7 +42,7 @@ public class ExerciseController {
         return new ResponseEntity<ExerciseDTO>(exerciseResponse, HttpStatus.CREATED);
     }
 
-    @GetMapping("/display-exercises/{id}")
+    @GetMapping("/view-exercise-details/{id}")
     public ResponseEntity<ExerciseDTO> displayExerciseDetails(@PathVariable(name = "id") Long id) {
         Exercise exercise = exerciseService.getExerciseById(id);
 
@@ -73,7 +73,7 @@ public class ExerciseController {
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/display-exercises")
+    @GetMapping("/view-exercises")
     public List<ExerciseDTO> displayExercises(@RequestParam(defaultValue = "0") int page,
                                       @RequestParam(defaultValue = "25") int size) throws Exception {
         Pageable pageable = PageRequest.of(page, size);

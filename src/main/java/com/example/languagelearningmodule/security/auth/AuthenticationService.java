@@ -51,7 +51,7 @@ public class AuthenticationService {
         //if we get here, then the user is authenticated
         Optional<User> possibleUser = userRepository.findByEmail(authenticationRequest.getUserEmail());
 
-        User user = new User();
+        User user;
 
         if(possibleUser.isPresent()) {
             user = possibleUser.get();

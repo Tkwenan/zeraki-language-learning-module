@@ -23,14 +23,8 @@ public class ApplicationConfig {
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
-   
-    //CustomUserDetailsService userDetailsService;
 
-    /*@Bean
-    public UserDetailsService userDetailsService() {
-        return new CustomUserDetailsService();
-    }
-    */
+
     @Bean
     UserDetailsService userDetailsService() {
         return username -> userRepository.findByEmail(username)

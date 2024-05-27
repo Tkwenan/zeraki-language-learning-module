@@ -1,11 +1,9 @@
 package com.example.languagelearningmodule.security.auth;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,4 +12,10 @@ public class AuthenticationResponse {
     private String firstName;
     private String lastName;
     private String email;
+    private String token;
+    private long expiresIn;
+
+    public String getToken() {
+        return token;
+    }
 }

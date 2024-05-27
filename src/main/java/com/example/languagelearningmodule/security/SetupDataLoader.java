@@ -45,18 +45,18 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
             //lesson endpoints
             Permission createNewLesson = createPermissionIfNotFound("CREATE_LESSON");
-            Permission displayLessonDetails = createPermissionIfNotFound("DISPLAY_LESSON");
+            Permission displayLessonDetails = createPermissionIfNotFound("VIEW_LESSON_DETAILS");
             Permission updateLesson = createPermissionIfNotFound("UPDATE_LESSON");
             Permission deleteLesson = createPermissionIfNotFound("DELETE_LESSON");
-            Permission displayLessons = createPermissionIfNotFound("DISPLAY_LESSONS");
+            Permission displayLessons = createPermissionIfNotFound("VIEW_LESSONS");
 
 
             //exercise endpoints
             Permission createNewExercise = createPermissionIfNotFound("CREATE_EXERCISE");
-            Permission displayExerciseDetails = createPermissionIfNotFound("DISPLAY_EXERCISE");
+            Permission displayExerciseDetails = createPermissionIfNotFound("VIEW_EXERCISE_DETAILS");
             Permission updateExercise = createPermissionIfNotFound("UPDATE_EXERCISE");
             Permission deleteExercise = createPermissionIfNotFound("DELETE_EXERCISE");
-            Permission displayExercises = createPermissionIfNotFound("DISPLAY_EXERCISES");
+            Permission displayExercises = createPermissionIfNotFound("VIEW_EXERCISES");
 
 
             //user progress endpoints
