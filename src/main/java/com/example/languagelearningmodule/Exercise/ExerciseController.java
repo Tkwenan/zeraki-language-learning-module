@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,8 +31,8 @@ public class ExerciseController {
     @Autowired
     private final ModelMapper modelMapper;
 
-
     @PostMapping("/create-new-exercise")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     public ResponseEntity<ExerciseDTO> createNewExercise(@RequestBody ExerciseDTO exerciseDTO){
         //convert DTO to entity
         Exercise exerciseRequest = modelMapper.map(exerciseDTO, Exercise.class);
@@ -43,6 +44,7 @@ public class ExerciseController {
     }
 
     @GetMapping("/view-exercise-details/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ExerciseDTO> displayExerciseDetails(@PathVariable(name = "id") Long id) {
         Exercise exercise = exerciseService.getExerciseById(id);
 
@@ -53,6 +55,7 @@ public class ExerciseController {
     }
 
     @PutMapping("/update-exercise/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     public ResponseEntity<ExerciseDTO> updateExercise(@PathVariable long id,
                                               @RequestBody ExerciseDTO exerciseDTO) {
         //convert DTO to entity
@@ -66,6 +69,7 @@ public class ExerciseController {
     }
 
     @DeleteMapping("/delete-exercise/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     public ResponseEntity<ApiResponse> deleteExercise(@PathVariable(name = "id") Long id) {
         exerciseService.deleteExerciseById(id);;
         ApiResponse apiResponse = new ApiResponse(Boolean.TRUE, "Exercise deleted successfully", HttpStatus.OK);
@@ -74,6 +78,7 @@ public class ExerciseController {
     }
 
     @GetMapping("/view-exercises")
+    @PreAuthorize("isAuthenticated()")
     public List<ExerciseDTO> displayExercises(@RequestParam(defaultValue = "0") int page,
                                       @RequestParam(defaultValue = "25") int size) throws Exception {
         Pageable pageable = PageRequest.of(page, size);
@@ -85,5 +90,4 @@ public class ExerciseController {
                 .map(exercise -> modelMapper.map(exercise, ExerciseDTO.class))
                 .collect(Collectors.toList());
     }
-
 }

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 @NoArgsConstructor(force = true)
 @RequiredArgsConstructor
 public class SecurityConfig  {
@@ -29,14 +31,6 @@ public class SecurityConfig  {
             this.authenticationProvider = authenticationProvider;
             this.jwtAuthFilter = jwtAuthFilter;
         }
-
-   /* @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder =
-                http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
-        return authenticationManagerBuilder.build();
-    }*/
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -59,8 +53,10 @@ public class SecurityConfig  {
                        .ignoringRequestMatchers("/api/**")
                 )
                         .authorizeHttpRequests((authorize) -> authorize
-                                .requestMatchers("/auth/**").permitAll()
-                                .requestMatchers("/api/**").authenticated()
+                                        .requestMatchers("/api/**").authenticated()
+                                        .requestMatchers("/auth/**").permitAll()
+
+                         /*
                         .requestMatchers("/api/exercises/create-new-exercise").hasRole("ADMIN")
                         .requestMatchers("/api/exercises/view-exercise/*").hasAnyAuthority("ADMIN", "USER")
                         .requestMatchers("/api/exercises/update-exercise/*").hasRole("ADMIN")
@@ -78,6 +74,7 @@ public class SecurityConfig  {
                         .requestMatchers("/api/user/delete-user/*").authenticated()
                         .requestMatchers("/api/user/display-users").authenticated()
                         .anyRequest().authenticated()
+                        */
                 );
 
 

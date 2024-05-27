@@ -1,14 +1,12 @@
 package com.example.languagelearningmodule.security.roles;
 
-import com.example.languagelearningmodule.security.permissions.Permission;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import com.example.languagelearningmodule.User.User;
-
-
-import java.util.*;
+import java.util.Date;
 
 @Entity
 @Data
@@ -16,31 +14,27 @@ import java.util.*;
 @Table(name = "roles")
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String name;
+    @Column(unique = true, nullable = false)
+    @Enumerated(EnumType.STRING)
+    private RoleEnum name;
 
-    @ManyToMany(mappedBy = "roles")
-    private Collection<User> users;
+    @Column(nullable = false)
+    private String description;
 
-    @ManyToMany
-    @JoinTable(
-            name = "roles_privileges",
-            joinColumns = @JoinColumn(
-                    name = "role_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "privilege_id", referencedColumnName = "id"))
-    private Collection<Permission> permissions;
+    @CreationTimestamp
+    @Column(updatable = false, name = "created_at")
+    private Date createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private Date updatedAt;
+
 
     public Role() {
         super();
-    }
-
-    public Role(final String name) {
-        super();
-        this.name = name;
     }
 
     public Long getId() {
@@ -51,29 +45,7 @@ public class Role {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    public Collection<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(final Collection<User> users) {
-        this.users = users;
-    }
-
-    public Collection<Permission> getPermissions() {
-        return permissions;
-    }
-
-    public void setPermissions(final Collection<Permission> permissions) {
-        this.permissions = permissions;
-    }
+    public void setDescription(String description){this.description = description;}
 
     @Override
     public int hashCode() {

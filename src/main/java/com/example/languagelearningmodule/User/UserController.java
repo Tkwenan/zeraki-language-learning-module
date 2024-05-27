@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,17 +29,8 @@ public class UserController {
     @Autowired
     private final ModelMapper modelMapper;
 
-  /*  @PostMapping("/register")
-    public ResponseEntity<UserDTO> registerNewUser(@RequestBody UserDTO userDTO){
-        User user = userService.registerNewUser(userDTO);
-
-        //convert entity to DTO
-        UserDTO userResponse = modelMapper.map(user, UserDTO.class);
-        return new ResponseEntity<UserDTO>(userResponse, HttpStatus.CREATED);
-    }
-   */
-
     @GetMapping("/display-users/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN', 'USER')")
     public ResponseEntity<UserDTO> displayUserDetails(@PathVariable(name = "id") Long id) {
         User user = userService.getUserById(id);
 
@@ -49,6 +41,7 @@ public class UserController {
     }
 
     @PutMapping("/update-user/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN', 'USER')")
     public ResponseEntity<UserDTO> updateUser(@PathVariable long id,
                                                     @RequestBody UserDTO userDTO) {
         //convert DTO to entity
@@ -62,6 +55,7 @@ public class UserController {
     }
 
     @DeleteMapping("/delete-user/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     public ResponseEntity<ApiResponse> deleteUser(@PathVariable(name = "id") Long id) {
         userService.deleteUserById(id);
         ApiResponse apiResponse = new ApiResponse(Boolean.TRUE, "User deleted successfully", HttpStatus.OK);
@@ -70,6 +64,7 @@ public class UserController {
     }
 
     @GetMapping("/display-users")
+    @PreAuthorize("isAuthenticated()")
     public List<UserDTO> displayUsers(@RequestParam(defaultValue = "0") int page,
                                          @RequestParam(defaultValue = "25") int size) throws Exception {
         Pageable pageable = PageRequest.of(page, size);

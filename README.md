@@ -9,7 +9,7 @@ Then, run the main project file, LanguageLearningModuleApplication.java to start
 Accessing the API endpoints: 
 A Postman collection was sent to careers@zeraki.com to enable access to the API endpoints.
 To start sending requests, go to the Auth folder in the collection. 
-Go to the ‘Login’ request where you will find the following login credentials: "userEmail": "john.doe@user.com", "userPassword": "qwerty"
+Go to the ‘Login’ request where you will find the following login credentials:  "userEmail": "superadmin@email.com",   "userPassword": "123456"
 Send the POST request to receive an authentication token. 
 To be able to use the other endpoints (except the ‘Register New User’ endpoint), you will need to paste this token into the Authorization header of each request, as shown in the screenshot below.
 <img width="1440" alt="Screenshot 2024-05-27 at 8 42 13 AM" src="https://github.com/Tkwenan/zeraki-language-learning-module/assets/54999162/22978d28-e59a-4272-82ca-7ac18043c67a">

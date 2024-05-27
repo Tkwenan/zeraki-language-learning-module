@@ -1,18 +1,19 @@
 package com.example.languagelearningmodule.User;
 
 import com.example.languagelearningmodule.exceptions.ResourceNotFoundException;
-import com.example.languagelearningmodule.exceptions.UserAlreadyExistsException;
+import com.example.languagelearningmodule.security.auth.RegisterRequest;
+import com.example.languagelearningmodule.security.roles.Role;
+import com.example.languagelearningmodule.security.roles.RoleEnum;
 import com.example.languagelearningmodule.security.roles.RoleRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.data.domain.Slice;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
-import java.util.*;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -25,26 +26,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Override
-    public User registerNewUser(UserDTO userDTO){
-        if(emailExists(userDTO.getEmail())){
-            throw new UserAlreadyExistsException("There is an account with that email address: " + userDTO.getEmail());
-        }
-
-        User user = new User();
-
-        user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        user.setEmail(userDTO.getEmail());
-        user.setRoles(Collections.singletonList(roleRepository.findRoleByName("ROLE_USER")));
-        return userRepository.save(user);
-    }
-
-    @Override
-    public void saveRegisteredUser(User user) {
-        userRepository.save(user);
-    }
 
     @Override
     public Optional<User> findUserByEmail(final String email) {
@@ -86,5 +67,23 @@ public class UserServiceImpl implements UserService {
 
     private boolean emailExists(final String email) {
         return userRepository.findByEmail(email).isPresent();
+    }
+
+    public User createAdministrator(RegisterRequest input) {
+        Optional<Role> optionalRole = roleRepository.findByName(RoleEnum.ADMIN);
+
+        if (optionalRole.isEmpty()) {
+            return null;
+        }
+
+        var user = new User();
+        user.setFirstName(input.getFirstName());
+        user.setLastName(input.getLastName());
+        user.setEmail(input.getEmail());
+        user.setPassword(passwordEncoder.encode(input.getPassword()));
+        user.setUsername(input.getUsername());
+        user.setRole(optionalRole.get());
+
+        return userRepository.save(user);
     }
 }
