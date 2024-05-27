@@ -1,12 +1,12 @@
 # zeraki-language-learning-module
-Project Setup
+Project Setup: 
 Download the project files to your local machine by cloning the project. 
 To clone the repository, follow the instructions on this link: https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository
 Open the project using an IDE e.g. IntelliJ
 On the IDE, run the command ‘mvn clean install’ to install the project dependencies 
 Then, run the main project file, LanguageLearningModuleApplication.java to start the project on port 8080.
 
-Accessing the API endpoints 
+Accessing the API endpoints: 
 A Postman collection was sent to careers@zeraki.com to enable access to the API endpoints.
 To start sending requests, go to the Auth folder in the collection. 
 Go to the ‘Login’ request where you will find the following login credentials: "userEmail": "john.doe@user.com", "userPassword": "qwerty"
