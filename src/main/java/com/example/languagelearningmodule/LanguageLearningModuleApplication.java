@@ -13,5 +13,4 @@ public class LanguageLearningModuleApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LanguageLearningModuleApplication.class, args);
 	}
-
 }

@@ -24,7 +24,6 @@ public class SecurityConfig  {
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter jwtAuthFilter;
 
-
     public SecurityConfig(JwtAuthenticationFilter jwtAuthFilter, AuthenticationProvider authenticationProvider)
         {
             this.authenticationProvider = authenticationProvider;
@@ -42,14 +41,27 @@ public class SecurityConfig  {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
-       httpSecurity.csrf(csrf -> csrf
+       /* httpSecurity
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/auth/**").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .authenticationProvider(authenticationProvider);
+
+      */
+
+         httpSecurity.csrf(csrf -> csrf
                         .ignoringRequestMatchers("/auth/**") // Exclude /auth/** from CSRF protection
                        .ignoringRequestMatchers("/api/**")
                 )
                         .authorizeHttpRequests((authorize) -> authorize
                                 .requestMatchers("/auth/**").permitAll()
                                 .requestMatchers("/api/**").authenticated()
-                       /* .requestMatchers("/api/exercises/create-new-exercise").hasRole("ADMIN")
+                        .requestMatchers("/api/exercises/create-new-exercise").hasRole("ADMIN")
                         .requestMatchers("/api/exercises/view-exercise/*").hasAnyAuthority("ADMIN", "USER")
                         .requestMatchers("/api/exercises/update-exercise/*").hasRole("ADMIN")
                         .requestMatchers("/api/exercises/delete-exercise/*").hasRole("ADMIN")
@@ -65,7 +77,7 @@ public class SecurityConfig  {
                         .requestMatchers("/api/user/update-user/*").authenticated()
                         .requestMatchers("/api/user/delete-user/*").authenticated()
                         .requestMatchers("/api/user/display-users").authenticated()
-                        .anyRequest().authenticated() */
+                        .anyRequest().authenticated()
                 );
 
 

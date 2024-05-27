@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/user")
+@RequestMapping("/api/users")
 public class UserController {
     @Autowired
     private final UserService userService;
@@ -28,7 +28,7 @@ public class UserController {
     @Autowired
     private final ModelMapper modelMapper;
 
-    @PostMapping("/register")
+  /*  @PostMapping("/register")
     public ResponseEntity<UserDTO> registerNewUser(@RequestBody UserDTO userDTO){
         User user = userService.registerNewUser(userDTO);
 
@@ -36,6 +36,7 @@ public class UserController {
         UserDTO userResponse = modelMapper.map(user, UserDTO.class);
         return new ResponseEntity<UserDTO>(userResponse, HttpStatus.CREATED);
     }
+   */
 
     @GetMapping("/display-users/{id}")
     public ResponseEntity<UserDTO> displayUserDetails(@PathVariable(name = "id") Long id) {
